@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Link from "next/link";
 
 const Wrapper = styled.div`
   background: url("/images/landing1.jpg") no-repeat center center fixed;
