@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import device from "../../public/consts/device";
 import Modal from "../components/Modal";
+import ModalContextProvider, { ModalContext } from "../context/ModalContext";
 
 const Wrapper = styled.div`
   overflow: hidden;
@@ -81,6 +82,7 @@ const Patty = styled.div`
 `;
 
 const Navbar = () => {
+  const { setisOpen } = useContext(ModalContext);
   return (
     <Wrapper>
       <Link href="/">
@@ -89,7 +91,7 @@ const Navbar = () => {
         </StyledHeader>
       </Link>
       <Modal></Modal>
-      <Hamburger>
+      <Hamburger onClick={() => setisOpen(true)}>
         <Patty></Patty>
         <Patty></Patty>
         <Patty></Patty>

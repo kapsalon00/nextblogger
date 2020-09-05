@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import { ModalContext } from "../context/ModalContext";
+import Link from "next/link";
 
 const ModalWrap = styled.div`
-  display: none; /* Hidden by default */
+  display: ${(props) =>
+    props.isOpen ? "block" : "none"}; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   left: 0;
@@ -20,19 +23,35 @@ const ModalContent = styled.div`
   border: 1px solid #888;
   width: 80%; /* Could be more or less, depending on screen size */
 `;
-const P = styled.p`
-  &&:hover {
+const FlexWrapper = styled.div`
+  display: none;
+  margin: 0px 50px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+const StyledButton = styled.button`
+    width: 150px;
+    height: 50px;
+    background-color: white;
     color: black;
-    text-decoration: none;
-    cursor: pointer;
+    border-style: none;
+    margin: 5px;
+    font-size: 20px;
+    &:hover {
+      background-color: black;
+      color: white;
+    }
   }
 `;
 
 const Modal = () => {
+  const { isOpen, setisOpen } = useContext(ModalContext);
   return (
-    <ModalWrap>
+    <ModalWrap isOpen={isOpen}>
       <ModalContent>
         <span
+          onClick={() => setisOpen(false)}
           style={{
             color: "aaa",
             float: "right",
@@ -43,7 +62,29 @@ const Modal = () => {
         >
           &times;
         </span>
-        <P>Some text in the Modal..</P>
+
+        <FlexWrapper>
+          <Link href="/blog">
+            <StyledButton onClick={() => setisOpen(false)}>
+              <a>BLOG</a>
+            </StyledButton>
+          </Link>
+          <Link href="/about">
+            <StyledButton onClick={() => setisOpen(false)}>
+              <a>ABOUT</a>
+            </StyledButton>
+          </Link>
+          <Link href="/cart">
+            <StyledButton onClick={() => setisOpen(false)}>
+              <a>LOGIN</a>
+            </StyledButton>
+          </Link>
+          <Link href="/cart">
+            <StyledButton onClick={() => setisOpen(false)}>
+              <a>SIGNUP</a>
+            </StyledButton>
+          </Link>
+        </FlexWrapper>
       </ModalContent>
     </ModalWrap>
   );
