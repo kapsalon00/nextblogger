@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { projectFirestore } from "../src/firebase/config";
+import Link from "next/link";
 
 const Wrapper = styled.div`
   max-width: 960px;
@@ -24,18 +25,12 @@ const blog = ({ data }) => {
       {data.map((dat) => {
         return (
           <div key={dat.id}>
-            <Title>{dat.title}</Title>
+            <Link href="/blog/[id]" as={`/blog/${dat.id}`}>
+              <Title>{dat.title}</Title>
+            </Link>
             <Description>{dat.desc}</Description>
-            {dat.paragraphs.map((p) => {
-              return <p>{p}</p>;
-            })}
           </div>
         );
-      })}
-      {data.map((dat) => {
-        dat.comments.map((comment) => {
-          return <p style={{ color: "red" }}>{"1111111111111 " + comment}</p>;
-        });
       })}
     </Wrapper>
   );
@@ -49,7 +44,8 @@ export const getStaticProps = async () => {
     .then((snapshot) => {
       snapshot.forEach((data) => {
         documents.push({
-          ...data.data(),
+          title: data.data().title,
+          desc: data.data().desc,
           id: data.id,
         });
       });
