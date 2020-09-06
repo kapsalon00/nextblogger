@@ -77,12 +77,12 @@ const Modal = () => {
               <a>ABOUT</a>
             </StyledButton>
           </Link>
-          <Link href="/cart">
+          <Link href="/login">
             <StyledButton onClick={() => setisOpen(false)}>
               <a>LOGIN</a>
             </StyledButton>
           </Link>
-          <Link href="/cart">
+          <Link href="/signup">
             <StyledButton onClick={() => setisOpen(false)}>
               <a>SIGNUP</a>
             </StyledButton>

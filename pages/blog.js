@@ -39,6 +39,9 @@ const blog = ({ data }) => {
                   </Link>
                 </div>
               </Card.Content>
+              <Card.Content extra>
+                {"Added: " + dat.addedOn.slice(1, 11)}
+              </Card.Content>
             </Card>
           </CardWrapper>
         );
@@ -51,12 +54,14 @@ export const getStaticProps = async () => {
   const documents = [];
   await projectFirestore
     .collection("blog-posts")
+    .orderBy("added", "desc")
     .get()
     .then((snapshot) => {
       snapshot.forEach((data) => {
         documents.push({
           title: data.data().title,
           desc: data.data().desc,
+          addedOn: JSON.stringify(data.data().added.toDate()),
           id: data.id,
         });
       });
