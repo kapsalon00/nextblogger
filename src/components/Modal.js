@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { ModalContext } from "../context/ModalContext";
 import Link from "next/link";
+import device from "../../public/consts/device";
 
 const ModalWrap = styled.div`
   display: ${(props) =>
@@ -22,6 +23,9 @@ const ModalContent = styled.div`
   padding: 20px;
   border: 1px solid #888;
   width: 80%; /* Could be more or less, depending on screen size */
+  @media ${device.tablet} {
+    width: 40%;
+  }
 `;
 const FlexWrapper = styled.div`
   display: none;
@@ -58,7 +62,6 @@ const Modal = () => {
             fontSize: "28px",
             fontWeight: "bold",
           }}
-          class="close"
         >
           &times;
         </span>

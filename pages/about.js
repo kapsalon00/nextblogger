@@ -1,14 +1,20 @@
 import React from "react";
 import styled from "styled-components";
+import device from "../public/consts/device";
 
 const Wrapper = styled.div`
+  width: 80%;
   margin: 0 auto;
-  margin-top: 50px;
-  width: 600px;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: center;
+  @media ${device.tablet} {
+    margin: 0 auto;
+    margin-top: 50px;
+    width: 600px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 const Paragraph = styled.p`
   color: #666666;

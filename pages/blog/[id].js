@@ -2,7 +2,15 @@ import React from "react";
 import { projectFirestore } from "../../src/firebase/config";
 
 const id = ({ data }) => {
-  return <div>{data.title}</div>;
+  return (
+    <>
+      <h1 style={{ color: "red" }}>{data.addedOn.slice(1, 11)}</h1>
+      <h1>{data.title}</h1>
+      {data.paragraphs.map((p, index) => {
+        return <p key={index}>{p}</p>;
+      })}
+    </>
+  );
 };
 
 export const getStaticPaths = async () => {
@@ -29,7 +37,14 @@ export const getStaticProps = async ({ params }) => {
     .doc(params.id)
     .get()
     .then((snapshot) => {
-      documents = snapshot.data();
+      console.log("the date timestamp is: " + snapshot.data().added.toDate());
+      let temp = JSON.stringify(snapshot.data().added.toDate());
+      console.log("temp is: " + temp);
+      documents = {
+        title: snapshot.data().title,
+        paragraphs: snapshot.data().paragraphs,
+        addedOn: temp,
+      };
     });
   return {
     props: {

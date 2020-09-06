@@ -2,21 +2,21 @@ import React from "react";
 import styled from "styled-components";
 import { projectFirestore } from "../src/firebase/config";
 import Link from "next/link";
+import { Button, Card } from "semantic-ui-react";
+import device from "../public/consts/device";
 
 const Wrapper = styled.div`
   max-width: 960px;
-  margin: 0 auto;
+  margin: 50px auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  @media ${device.laptop} {
+    flex-direction: row;
+    justify-content: space-around;
+  }
 `;
-
-const Title = styled.h1`
-  text-align: center;
-  font-size: 40px;
-  color: ${({ theme }) => theme.colors.primary};
-`;
-const Description = styled.div`
-  text-align: center;
-  font-size: 25px;
-  color: ${({ theme }) => theme.colors.primary};
+const CardWrapper = styled.div`
+  margin-bottom: 20px;
 `;
 
 const blog = ({ data }) => {
@@ -24,12 +24,23 @@ const blog = ({ data }) => {
     <Wrapper>
       {data.map((dat) => {
         return (
-          <div key={dat.id}>
-            <Link href="/blog/[id]" as={`/blog/${dat.id}`}>
-              <Title>{dat.title}</Title>
-            </Link>
-            <Description>{dat.desc}</Description>
-          </div>
+          <CardWrapper key={dat.id}>
+            <Card style={{ margin: "0 auto" }} key={dat.id}>
+              <Card.Content>
+                <Card.Header>{dat.title}</Card.Header>
+                <Card.Description>{dat.desc}</Card.Description>
+              </Card.Content>
+              <Card.Content extra>
+                <div className="ui two buttons">
+                  <Link href="/blog/[id]" as={`/blog/${dat.id}`}>
+                    <Button basic color="green">
+                      View post
+                    </Button>
+                  </Link>
+                </div>
+              </Card.Content>
+            </Card>
+          </CardWrapper>
         );
       })}
     </Wrapper>
