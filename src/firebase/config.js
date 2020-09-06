@@ -16,5 +16,4 @@ if (!firebase.apps.length) {
 }
 
 const projectFirestore = firebase.firestore();
-
 export { projectFirestore };

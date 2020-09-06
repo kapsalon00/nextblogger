@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import device from "../../public/consts/device";
 import Modal from "../components/Modal";
-import ModalContextProvider, { ModalContext } from "../context/ModalContext";
+import { ModalContext } from "../context/ModalContext";
 
 const Wrapper = styled.div`
   overflow: hidden;
@@ -28,7 +28,7 @@ const StyledHeader = styled.h1`
     margin: 0 0 0 20px;
     padding: 0;
     font-weight: bold;
-    line-height: 66px;
+    line-height: 86px;
     display: flex;
     align-items: center;
     text-align: justify;
@@ -40,7 +40,7 @@ const StyledHeader = styled.h1`
 const FlexWrapper = styled.div`
   display: none;
   @media ${device.laptop} {
-    margin: 0px 50px 0 0;
+    margin: 8px 50px 0 0;
     display: flex;
     align-items: center;
   }
@@ -107,12 +107,12 @@ const Navbar = () => {
             <a>ABOUT</a>
           </StyledButton>
         </Link>
-        <Link href="/cart">
+        <Link href="/login">
           <StyledButton>
             <a>LOGIN</a>
           </StyledButton>
         </Link>
-        <Link href="/cart">
+        <Link href="/signup">
           <StyledButton>
             <a>SIGNUP</a>
           </StyledButton>
