@@ -13,6 +13,7 @@ const Wrapper = styled.div`
   @media ${device.laptop} {
     flex-direction: row;
     justify-content: space-around;
+    flex-wrap: wrap;
   }
 `;
 const CardWrapper = styled.div`
@@ -70,6 +71,7 @@ export const getStaticProps = async () => {
     props: {
       data: documents,
     },
+    revalidate: 1,
   };
 };
 

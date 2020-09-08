@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { projectFirestore } from "../../src/firebase/config";
+import { projectFirestore, timestamp } from "../../src/firebase/config";
 import styled from "styled-components";
 import { Comment, Header, Form, Button } from "semantic-ui-react";
 import device from "../../public/consts/device";
@@ -20,36 +20,34 @@ const CommentsWrapper = styled.div`
   }
 `;
 
-const id = ({ data, comments }) => {
+const id = ({ data, commentsTest }) => {
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
+  const [comments, setComments] = useState(commentsTest);
   const handleAddPost = () => {
-    projectFirestore
-      .collection("blog-posts")
-      .doc(data.id)
-      .get()
-      .then((details) => {
-        details.forEach((doc) => {
-          let jsonData = doc.data();
-        });
-      });
-    projectFirestore
-      .collection("blog-posts")
-      .doc(data.id)
-      .set(
+    if (!name || !content) {
+      alert("Fill comment form");
+    } else {
+      projectFirestore
+        .collection("blog-posts")
+        .doc(data.id)
+        .collection("comments")
+        .add({ poster: name, post: content, postedOn: timestamp() });
+
+      setComments([
+        //this set is so comments appear instantly
         {
-          comments: [
-            {
-              poster: name,
-              post: content,
-              //   postedOn: firebase.firestore.FieldValue.serverTimestamp(),
-            },
-          ],
+          poster: name,
+          post: content,
+          postedOn: JSON.stringify(new Date()),
         },
-        { merge: true }
-      );
-    console.log("coś poszlo");
+        ...comments,
+      ]);
+      setName("");
+      setContent("");
+    }
   };
+
   return (
     <Wrapper>
       <PostWrapper>
@@ -120,30 +118,41 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params }) => {
   let documents = null;
   const commentss = [];
+
+  await projectFirestore
+    .collection("blog-posts")
+    .doc(params.id)
+    .collection("comments")
+    .orderBy("postedOn", "desc")
+    .get()
+    .then((snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        commentss.push({
+          post: doc.data().post,
+          poster: doc.data().poster,
+          postedOn: JSON.stringify(doc.data().postedOn.toDate()),
+        });
+      });
+    });
+
   await projectFirestore
     .collection("blog-posts")
     .doc(params.id)
     .get()
     .then((snapshot) => {
-      snapshot.data().comments.forEach((dataPiece) => {
-        commentss.push({
-          post: dataPiece.post,
-          poster: dataPiece.poster,
-          postedOn: JSON.stringify(dataPiece.postedOn.toDate()),
-        });
-      });
-
       documents = {
         title: snapshot.data().title,
         paragraphs: snapshot.data().paragraphs,
         id: snapshot.id,
       };
     });
+
   return {
     props: {
       data: documents,
-      comments: commentss,
+      commentsTest: commentss,
     },
+    revalidate: 1,
   };
 };
 export default id;
