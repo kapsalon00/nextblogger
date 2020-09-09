@@ -107,16 +107,6 @@ const Navbar = () => {
             <a>ABOUT</a>
           </StyledButton>
         </Link>
-        <Link href="/login">
-          <StyledButton>
-            <a>LOGIN</a>
-          </StyledButton>
-        </Link>
-        <Link href="/signup">
-          <StyledButton>
-            <a>SIGNUP</a>
-          </StyledButton>
-        </Link>
       </FlexWrapper>
     </Wrapper>
   );

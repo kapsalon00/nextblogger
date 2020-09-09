@@ -77,16 +77,6 @@ const Modal = () => {
               <a>ABOUT</a>
             </StyledButton>
           </Link>
-          <Link href="/login">
-            <StyledButton onClick={() => setisOpen(false)}>
-              <a>LOGIN</a>
-            </StyledButton>
-          </Link>
-          <Link href="/signup">
-            <StyledButton onClick={() => setisOpen(false)}>
-              <a>SIGNUP</a>
-            </StyledButton>
-          </Link>
         </FlexWrapper>
       </ModalContent>
     </ModalWrap>

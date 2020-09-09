@@ -3,7 +3,7 @@ import "semantic-ui-css/semantic.min.css";
 import Navbar from "../src/components/Navbar";
 import Footer from "../src/components/Footer";
 import ModalContextProvider from "../src/context/ModalContext";
-import { ModalContent } from "semantic-ui-react";
+import AuthContextProvider from "../src/context/AuthContext";
 
 const theme = {
   colors: {
@@ -14,11 +14,13 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <ModalContextProvider>
-          <Navbar></Navbar>
-          <Component {...pageProps} />
-          <Footer></Footer>
-        </ModalContextProvider>
+        <AuthContextProvider>
+          <ModalContextProvider>
+            <Navbar></Navbar>
+            <Component {...pageProps} />
+            <Footer></Footer>
+          </ModalContextProvider>
+        </AuthContextProvider>
       </ThemeProvider>
     </>
   );
