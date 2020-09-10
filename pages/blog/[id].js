@@ -50,50 +50,55 @@ const id = ({ data, commentsTest }) => {
 
   return (
     <Wrapper>
-      <PostWrapper>
-        <h1 style={{ textAlign: "center" }}>{data.title}</h1>
-        {data.paragraphs.map((p, index) => {
-          return <P key={index}>{p}</P>;
-        })}
-      </PostWrapper>
-      <CommentsWrapper>
-        <Comment.Group style={{ margin: "0 auto" }}>
-          <Header as="h3" dividing>
-            Comments
-          </Header>
-          {comments.map((comment, index) => {
-            return (
-              <Comment key={index}>
-                <Comment.Content>
-                  <Comment.Author as="a">{comment.poster}</Comment.Author>
-                  <Comment.Metadata>
-                    <div>
-                      {comment.postedOn.slice(1, 11) +
-                        " " +
-                        comment.postedOn.slice(12, 20)}
-                    </div>
-                  </Comment.Metadata>
-                  <Comment.Text>{comment.post}</Comment.Text>
-                </Comment.Content>
-              </Comment>
-            );
-          })}
-          <Form reply>
-            <Form.Input
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Your Name"
-            />
-            <Form.TextArea onChange={(e) => setContent(e.target.value)} />
-            <Button
-              onClick={handleAddPost}
-              content="Add Reply"
-              labelPosition="left"
-              icon="edit"
-              primary
-            />
-          </Form>
-        </Comment.Group>
-      </CommentsWrapper>
+      {data && (
+        <>
+          <PostWrapper>
+            <h1 style={{ textAlign: "center" }}>{data.title}</h1>
+            {data.paragraphs.map((p, index) => {
+              return <P key={index}>{p}</P>;
+            })}
+          </PostWrapper>
+          <CommentsWrapper>
+            <Comment.Group style={{ margin: "0 auto" }}>
+              <Header as="h3" dividing>
+                Comments
+              </Header>
+              {comments.map((comment, index) => {
+                return (
+                  <Comment key={index}>
+                    <Comment.Content>
+                      <Comment.Author as="a">{comment.poster}</Comment.Author>
+                      <Comment.Metadata>
+                        <div>
+                          {comment.postedOn.slice(1, 11) +
+                            " " +
+                            comment.postedOn.slice(12, 20)}
+                        </div>
+                      </Comment.Metadata>
+                      <Comment.Text>{comment.post}</Comment.Text>
+                    </Comment.Content>
+                  </Comment>
+                );
+              })}
+              <Form reply>
+                <Form.Input
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Your Name"
+                />
+                <Form.TextArea onChange={(e) => setContent(e.target.value)} />
+                <Button
+                  onClick={handleAddPost}
+                  content="Add Reply"
+                  labelPosition="left"
+                  icon="edit"
+                  primary
+                />
+              </Form>
+            </Comment.Group>
+          </CommentsWrapper>
+        </>
+      )}
+      {!data && <div>Invalid post route</div>}
     </Wrapper>
   );
 };
@@ -111,7 +116,7 @@ export const getStaticPaths = async () => {
 
   return {
     paths: pathsToPass,
-    fallback: false,
+    fallback: true,
   };
 };
 
