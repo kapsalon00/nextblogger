@@ -11,9 +11,10 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   @media ${device.laptop} {
-    flex-direction: row;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    margin: 20px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 40px;
   }
 `;
 const CardWrapper = styled.div`
