@@ -13,11 +13,13 @@ const P = styled.p`
 `;
 const PostWrapper = styled.div`
   margin-bottom: 50px;
+  @media ${device.tablet} {
+    max-width: 960px;
+    margin: 0 auto;
+  }
 `;
 const CommentsWrapper = styled.div`
   margin: 50px 20px 0 20px;
-  @media ${device.tablet} {
-  }
 `;
 
 const id = ({ data, commentsTest }) => {
