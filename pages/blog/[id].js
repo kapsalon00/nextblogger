@@ -50,7 +50,7 @@ const id = ({ data, commentsTest }) => {
 
   return (
     <Wrapper>
-      {data && (
+      {data ? (
         <>
           <PostWrapper>
             <h1 style={{ textAlign: "center" }}>{data.title}</h1>
@@ -97,8 +97,13 @@ const id = ({ data, commentsTest }) => {
             </Comment.Group>
           </CommentsWrapper>
         </>
+      ) : (
+        <div style={{ margin: "20px auto" }}>
+          <p style={{ color: "red", textAlign: "center", fontSize: "60px" }}>
+            Invalid post route
+          </p>
+        </div>
       )}
-      {!data && <div>Invalid post route</div>}
     </Wrapper>
   );
 };
@@ -145,11 +150,14 @@ export const getStaticProps = async ({ params }) => {
     .doc(params.id)
     .get()
     .then((snapshot) => {
-      documents = {
-        title: snapshot.data().title,
-        paragraphs: snapshot.data().paragraphs,
-        id: snapshot.id,
-      };
+      if (typeof snapshot.data() !== "undefined") {
+        //if no if then error
+        documents = {
+          title: snapshot.data().title,
+          paragraphs: snapshot.data().paragraphs,
+          id: snapshot.id,
+        };
+      }
     });
 
   return {
